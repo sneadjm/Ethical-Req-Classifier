@@ -6,7 +6,7 @@ import yaml
 import os
 
 import matplotlib.pyplot as plt
-from sklearn.metrics import RocCurveDisplay, precision_score, recall_score
+from sklearn.metrics import RocCurveDisplay, precision_score, recall_score, f1_score
 
 from dataset import load_training_dataset
 from classifier import SBERTClassifier
@@ -79,7 +79,10 @@ def train(n_epochs, model, save_pth, data_pth='data_config/data.yaml', n_patienc
                 print(f'Processed {n_patience} epochs without improvement. Implementing early stopping')
                 break
 
-def val(model, wts_list):
+def val(model, wts_list, train=True):
+    if not train:
+        train_dl, val_dl, final_val_dl = load_training_dataset(data_pth='data_config/data.yaml', batch_size=32,
+                                                               embedder=model.embedder)
     for wts in wts_list:
         model.head.load_state_dict(torch.load(os.path.join('weights', wts)), strict=True)
         model.eval()
@@ -98,15 +101,19 @@ def val(model, wts_list):
             # print(target, output)
             # loss = criterion(output, target)
             accuracy = total_correct / total_samples
-            precision = precision_score(target.detach().numpy(), predicted.detach().numpy())
-            recall = recall_score(target.detach().numpy(), predicted.detach().numpy())
-            print()
+            precision = precision_score(target.detach().numpy(), predicted.round().detach().numpy())
+            recall = recall_score(target.detach().numpy(), predicted.round().detach().numpy())
+            f1 = f1_score(target.detach().numpy(), predicted.round().detach().numpy(), average='weighted')
+
+            print(wts)
             print('-'*50)
             print(f'Accuracy: {accuracy}')
             print(f'Precision: {precision}')
             print(f'Recall: {recall}')
-            RocCurveDisplay.from_predictions(target.detach().numpy(), predicted.detach().numpy())
-            plt.title('Small Commonsense Model Tested on Justice Dataset')
+            print(f'F1: {f1}')
+            RocCurveDisplay.from_predictions(target.detach().numpy(), predicted.round().detach().numpy())
+            plt.title(f'{wts} Model Tested on Common Sense Dataset')
+            plt.savefig(f'plots/{wts.split(".")[0]}_on_common.png')
             plt.show()
 
 if __name__ == "__main__":
@@ -120,4 +127,4 @@ if __name__ == "__main__":
     train(n_epochs=n_epochs, model=model, save_pth=save_pth)
 
     wts_list = ['just.pt', 'cm.pt', 'just_and_cm.pt']
-    val(model, wts_list=wts_list)
+    val(model, wts_list=wts_list, train=False)
