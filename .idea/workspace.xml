@@ -5,8 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b5bbce57-506d-4580-a261-dd174d36e31b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/plots_old/cm_on_justice.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plots_old/just_and_cm_on_justice.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plots_old/just_on_justice.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weights_old/cm.pt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weights_old/just_and_cm.pt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/classifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_config/data.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/data_config/data.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/cm_on_both.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/cm_on_justice.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/just_and_cm_on_both.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/just_and_cm_on_justice.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/just_on_both.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/just_on_justice.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weights/best.pt" beforeDir="false" afterPath="$PROJECT_DIR$/weights_old/best.pt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weights/cm.pt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/weights/just.pt" beforeDir="false" afterPath="$PROJECT_DIR$/weights_old/just.pt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weights/just_and_cm.pt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,9 +55,18 @@
     "Python.train.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main"
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/jennasnead/PycharmProjects/EthicsReqClassifier/data_config"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data_config" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>

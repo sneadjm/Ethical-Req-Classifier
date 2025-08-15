@@ -6,6 +6,7 @@ import yaml
 import os
 
 import matplotlib.pyplot as plt
+from sentence_transformers import SentenceTransformer
 from sklearn.metrics import RocCurveDisplay, precision_score, recall_score, f1_score
 
 from dataset import load_training_dataset
@@ -24,7 +25,7 @@ def train(n_epochs, model, save_pth, data_pth='data_config/data.yaml', n_patienc
     optimizer = torch.optim.SGD(model.head.parameters(), lr=0.001)
 
     global final_val_dl
-    train_dl, val_dl, final_val_dl = load_training_dataset(data_pth=data_pth, batch_size=batch_size, embedder=model.embedder)
+    train_dl, val_dl, final_val_dl = load_training_dataset(data_pth=data_pth, batch_size=batch_size, embedder=SentenceTransformer("all-mpnet-base-v2"))
 
     n_no_improve = 0
     for epoch in range(n_epochs):
@@ -82,7 +83,7 @@ def train(n_epochs, model, save_pth, data_pth='data_config/data.yaml', n_patienc
 def val(model, wts_list, train=True):
     if not train:
         train_dl, val_dl, final_val_dl = load_training_dataset(data_pth='data_config/data.yaml', batch_size=32,
-                                                               embedder=model.embedder)
+                                                               embedder=SentenceTransformer("all-mpnet-base-v2"))
     for wts in wts_list:
         model.head.load_state_dict(torch.load(os.path.join('weights', wts)), strict=True)
         model.eval()
@@ -112,19 +113,20 @@ def val(model, wts_list, train=True):
             print(f'Recall: {recall}')
             print(f'F1: {f1}')
             RocCurveDisplay.from_predictions(target.detach().numpy(), predicted.round().detach().numpy())
-            plt.title(f'{wts} Model Tested on Common Sense Dataset')
-            plt.savefig(f'plots/{wts.split(".")[0]}_on_common.png')
+            plt.title(f'{wts} Model Tested on Requirements Dataset')
+            plt.savefig(f'plots/{wts.split(".")[0]}_on_reqs.png')
             plt.show()
 
 if __name__ == "__main__":
     model = SBERTClassifier(num_classes=1)
     pre_trained = False
     if pre_trained:
-        model.load_state_dict(torch.load('weights/cm.pt'))
+        model.head.load_state_dict(torch.load('weights/just_and_cm.pt'))
 
-    n_epochs = 100
-    save_pth = 'weights/just_and_cm.pt'
-    train(n_epochs=n_epochs, model=model, save_pth=save_pth)
+    # n_epochs = 25
+    # save_pth = 'weights/ethics.pt'
+    # train(n_epochs=n_epochs, model=model, save_pth=save_pth)
 
-    wts_list = ['just.pt', 'cm.pt', 'just_and_cm.pt']
+    # wts_list = ['just.pt', 'cm.pt', 'just_and_cm.pt', 'ethics.pt']
+    wts_list = ['just_and_cm.pt', 'ethics.pt']
     val(model, wts_list=wts_list, train=False)

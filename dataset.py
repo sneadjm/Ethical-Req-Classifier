@@ -1,3 +1,4 @@
+from sentence_transformers import SentenceTransformer
 from torch.utils.data import DataLoader, TensorDataset
 import torch
 
@@ -9,7 +10,7 @@ import yaml
 
 
 def load_training_dataset(embedder, data_pth='data_config/data.yaml', batch_size=32):
-
+    #embedder = SentenceTransformer("all-mpnet-base-v2")
     relevant_cols = ['input', 'label']
 
     full_train = pd.DataFrame(columns=relevant_cols)
@@ -19,6 +20,11 @@ def load_training_dataset(embedder, data_pth='data_config/data.yaml', batch_size
         data_config = yaml.safe_load(fle)
     for pth in data_config['train']:
         train_csv = pd.read_csv(os.path.join(data_config['parent_dir'], pth), header=0)
+        # if 'input' in train_csv.columns:
+        #     reverse_map = {0: 1, 1: 0}
+        #     train_csv['corrected_label'] = train_csv['label'].map(reverse_map).fillna(train_csv['label'])
+        #     train_csv.drop('label', axis=1, inplace=True)
+        #     train_csv.rename(columns={'corrected_label': 'label'}, inplace=True)
         if 'scenario' in train_csv.columns:
             train_csv.rename(columns={'scenario': 'input'}, inplace=True)
         train_csv = train_csv[relevant_cols]
@@ -26,6 +32,11 @@ def load_training_dataset(embedder, data_pth='data_config/data.yaml', batch_size
 
     for pth in data_config['val']:
         val_csv = pd.read_csv(os.path.join(data_config['parent_dir'], pth), header=0)
+        # if 'input' in val_csv.columns:
+        #     reverse_map = {0: 1, 1:0}
+        #     val_csv['corrected_label'] = val_csv['label'].map(reverse_map).fillna(val_csv['label'])
+        #     val_csv.drop('label', axis=1, inplace=True)
+        #     val_csv.rename(columns={'corrected_label': 'label'}, inplace=True)
         if 'scenario' in val_csv.columns:
             val_csv.rename(columns={'scenario': 'input'}, inplace=True)
         val_csv = val_csv[relevant_cols]
