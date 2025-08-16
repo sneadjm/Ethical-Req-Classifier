@@ -1,11 +1,11 @@
-#parent_dir: /Users/jennasnead/Downloads/Requirements_Datasets/ethics
-parent_dir: /Users/jennasnead/Downloads/Requirements_Datasets
+parent_dir: /Users/jennasnead/Downloads/Requirements_Datasets/ethics
+#parent_dir: /Users/jennasnead/Downloads/Requirements_Datasets
 
 train:
-#  - commonsense/cm_train.csv
+  - commonsense/cm_train.csv
 #  - justice/justice_train.csv
-  - ethics_gt_official.csv
+#  - ethics_gt_official.csv
 val:
-#  - commonsense/cm_test.csv
+  - commonsense/cm_test.csv
 #  - justice/justice_test.csv
-  - ethics_gt_official.csv
+#  - ethics_gt_official.csv

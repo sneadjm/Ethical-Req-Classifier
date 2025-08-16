@@ -33,6 +33,7 @@ def train(n_epochs, model, save_pth, data_pth='data_config/data.yaml', n_patienc
         train_loss, val_loss = 0.0, 0.0
 
         model.train()  # prep model for training
+        model.prep_for_tuning()
 
         for data, target in train_dl:
             # clear the gradients of all optimized variables
@@ -83,7 +84,7 @@ def train(n_epochs, model, save_pth, data_pth='data_config/data.yaml', n_patienc
 def val(model, wts_list, train=True):
     if not train:
         train_dl, val_dl, final_val_dl = load_training_dataset(data_pth='data_config/data.yaml', batch_size=32,
-                                                               embedder=SentenceTransformer("all-mpnet-base-v2"))
+                                                               embedder=model)
     for wts in wts_list:
         model.head.load_state_dict(torch.load(os.path.join('weights', wts)), strict=True)
         model.eval()
@@ -123,10 +124,10 @@ if __name__ == "__main__":
     if pre_trained:
         model.head.load_state_dict(torch.load('weights/just_and_cm.pt'))
 
-    # n_epochs = 25
-    # save_pth = 'weights/ethics.pt'
-    # train(n_epochs=n_epochs, model=model, save_pth=save_pth)
+    n_epochs = 250
+    save_pth = 'weights/cm.pt'
+    train(n_epochs=n_epochs, model=model, save_pth=save_pth)
 
     # wts_list = ['just.pt', 'cm.pt', 'just_and_cm.pt', 'ethics.pt']
-    wts_list = ['just_and_cm.pt', 'ethics.pt']
-    val(model, wts_list=wts_list, train=False)
+    # wts_list = ['just_and_cm.pt', 'ethics.pt']
+    # val(model, wts_list=wts_list, train=False)

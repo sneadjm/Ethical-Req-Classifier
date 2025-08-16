@@ -1,1 +1,5 @@
 data_config/data.yaml
+weights_old
+plots_old
+.DS_Store
+.idea
