@@ -22,3 +22,15 @@ How to run:
 - Run the script by either using the run functionality in an IDE of your choice or by `python train.py` in the command line with the virtual environment running.
 
 This project represents the code forming the basis of a graduate research project into ethical requirements identification led by Dr. Krishnendu Ghosh.
+
+### References
+This repository uses datasets from:
+- PURE Dataset: A. Ferrari, G. O. Spagnolo, and S. Gnesi, “Pure: A dataset of public requirements documents,” in 2017 IEEE 25th International Requirements
+Engineering Conference (RE). IEEE, 2017, pp. 502–505.
+- ETHICS Benchmark: D. Hendrycks, C. Burns, S. Basart, A. Critch, J. Li, D. Song, and
+J. Steinhardt, “Aligning AI with shared human values,” Proceedings of
+the International Conference on Learning Representations (ICLR), 2021.
+- E.U. Guidelines for Trustworthy AI: https://digital-strategy.ec.europa.eu/en/library/ethics-guidelines-trustworthy-ai
+- IEEE Code of Ethics: https://www.ieee.org/content/dam/ieee-org/ieee/web/org/about/corporate/ieee-code-of-ethics.pdf
+
+The model card from the all-mpnet-v2 mdoel used to generate the embeddings can be found here in the HuggingFace library: https://huggingface.co/sentence-transformers/all-mpnet-base-v2
