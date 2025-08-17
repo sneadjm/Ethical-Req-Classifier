@@ -38,7 +38,7 @@ class SBERTClassifier(nn.Module):
             param.requires_grad = True
 
     def encode(self, x):
-        embeds = self.embedder(x)
+        embeds = self.embedder.encode(x)
         return embeds
 
     def forward(self, embeds):

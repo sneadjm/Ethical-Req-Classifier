@@ -25,7 +25,7 @@ def train(n_epochs, model, save_pth, data_pth='data_config/data.yaml', n_patienc
     optimizer = torch.optim.SGD(model.head.parameters(), lr=0.001)
 
     global final_val_dl
-    train_dl, val_dl, final_val_dl = load_training_dataset(data_pth=data_pth, batch_size=batch_size, embedder=SentenceTransformer("all-mpnet-base-v2"))
+    train_dl, val_dl, final_val_dl = load_training_dataset(data_pth=data_pth, batch_size=batch_size, embedder=model)
 
     n_no_improve = 0
     for epoch in range(n_epochs):
@@ -81,7 +81,8 @@ def train(n_epochs, model, save_pth, data_pth='data_config/data.yaml', n_patienc
                 print(f'Processed {n_patience} epochs without improvement. Implementing early stopping')
                 break
 
-def val(model, wts_list, train=True):
+def val(model, wts_list, train):
+    global final_val_dl
     if not train:
         train_dl, val_dl, final_val_dl = load_training_dataset(data_pth='data_config/data.yaml', batch_size=32,
                                                                embedder=model)
@@ -120,14 +121,16 @@ def val(model, wts_list, train=True):
 
 if __name__ == "__main__":
     model = SBERTClassifier(num_classes=1)
-    pre_trained = False
+    pre_trained = True
+    do_train = True
     if pre_trained:
-        model.head.load_state_dict(torch.load('weights/just_and_cm.pt'))
+        model.head.load_state_dict(torch.load('weights/just.pt'))
 
-    n_epochs = 250
-    save_pth = 'weights/cm.pt'
-    train(n_epochs=n_epochs, model=model, save_pth=save_pth)
+    if do_train:
+        n_epochs = 250
+        save_pth = 'weights/just_ethics.pt'
+        train(n_epochs=n_epochs, model=model, save_pth=save_pth)
 
-    # wts_list = ['just.pt', 'cm.pt', 'just_and_cm.pt', 'ethics.pt']
-    # wts_list = ['just_and_cm.pt', 'ethics.pt']
-    # val(model, wts_list=wts_list, train=False)
+    #wts_list = ['just.pt', 'cm.pt', 'just_and_cm.pt']
+    wts_list = ['just.pt', 'just_ethics.pt']
+    val(model, wts_list=wts_list, train=do_train)
